@@ -15,6 +15,8 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
 
+import com.ljheee.read.ReadXls;
+
 
 /**
  * 文件上传数据接收类
@@ -27,8 +29,8 @@ public class UploadFileServlet extends HttpServlet {
 	/** 统一的编码格式*/
 	private static final String encode = "UTF-8";
 	
-	FileItem xlsFile1;//全校教学计划
-	FileItem xlsFile2;//教研室计划
+	File xlsFile1;//全校教学计划
+	File xlsFile2;//教研室计划
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -64,9 +66,12 @@ public class UploadFileServlet extends HttpServlet {
 			//解析请求数据包
 			List<FileItem> fileItems = upload.parseRequest(request);
 			if(null != fileItems){
-				xlsFile1 = fileItems.get(0);
-				xlsFile2 = fileItems.get(1);
+				xlsFile1 = (File) fileItems.get(0);
+				xlsFile2 = (File) fileItems.get(1);
 			}
+			ReadXls readXls = ReadXls.getInstance();
+			readXls.setXlsFile(xlsFile1);
+			
 			
 			System.out.println(xlsFile1.getName());
 			request.getRequestDispatcher("course_schedule.jsp").forward(request, response);
