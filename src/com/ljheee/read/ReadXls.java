@@ -14,6 +14,7 @@ import com.ljheee.bean.Teacher;
 import jxl.Cell;
 import jxl.Sheet;
 import jxl.Workbook;
+import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
 /**
@@ -45,7 +46,9 @@ public class ReadXls {
 	public void setXlsFile(File xlsFile) {
 		this.xlsFile = xlsFile;
 		try {
-			wb = Workbook.getWorkbook(xlsFile);
+			WorkbookSettings wbs = new WorkbookSettings(); 
+			wbs.setEncoding("UTF-8");
+			wb = Workbook.getWorkbook(xlsFile,wbs);
 			sheet = wb.getSheet(0);
 			rows = sheet.getRows();
 			cols = sheet.getColumns();
@@ -64,7 +67,7 @@ public class ReadXls {
 	 * 
 	 * @return
 	 */
-	public List<Teacher> readXls() {
+	public List<Teacher> getTeacherList() {
 		List<Teacher> tSet = new ArrayList<>();
 
 		Cell[] tableTitles = sheet.getRow(0);
@@ -126,7 +129,7 @@ public class ReadXls {
 	}
 
 	/**
-	 * 获取教师集合
+	 * 获取教师名集合
 	 * 
 	 * @return
 	 */
@@ -161,7 +164,7 @@ public class ReadXls {
 	public List<Major> getTeacherTeachesByName(String name) {
 		List<Major> list = new ArrayList<>();
 
-		List<Teacher> tList = readXls();
+		List<Teacher> tList = getTeacherList();
 		for (int i = 0; i < tList.size(); i++) {
 			if (tList.get(i).name.equals(name)) {
 				list.add(tList.get(i).teachMajor);

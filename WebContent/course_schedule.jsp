@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
   <head>
@@ -91,7 +91,30 @@ th, td {
 tr:nth-child(even) {
 	background-color: #f2f200;
 }
+
 </style>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+<script type="text/javascript">   
+  
+function getTeacher(currTeacher)  
+{  
+    //当前 所选择 的教师名
+    var currTeacher = currTeacher;  
+    alert(currTeacher);
+    //清空 专业选择 下拉选单  
+    //document.all.selMajor.length = 0 ;  
+     
+    //填充专业选择 下拉选单  
+      
+   $.post('selectMajorServlet', { name: currTeacher} ,function(list) {
+		//$('#fileUploadProcess').html(data);
+	   document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
+	});
+
+}  
+</script>
+
+
   </head>
   
   <body>
@@ -119,12 +142,18 @@ tr:nth-child(even) {
 			</tr>
 			
 			<tr>
-				<td><select>
+				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
 						<option value="1" selected = "selected"  >请选择</option>
+						<c:forEach var="item" items="${tList}">
+						<option  value="${item.name}">${item.name}</option>
+						</c:forEach>
 					</select> 
 				</td>
-				<td><select>
+				<td><select id="selMajor">
 						<option value="1" selected = "selected"  >请选择</option>
+						<c:forEach var="item" items="${majorList}">
+						<option  value="${item.name}">${item.name}</option>
+						</c:forEach>
 					</select>
 				</td>
 				<td><select>

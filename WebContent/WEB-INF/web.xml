@@ -25,5 +25,15 @@
 <servlet-name>upload</servlet-name> 
 <url-pattern>/upload</url-pattern> 
 </servlet-mapping> 
+
+<servlet> 
+<servlet-name>selectMajorServlet</servlet-name> 
+<servlet-class>com.ljheee.web.SelectMajorServlet</servlet-class> 
+</servlet> 
+  
+  <servlet-mapping> 
+<servlet-name>selectMajorServlet</servlet-name> 
+<url-pattern>/selectMajorServlet</url-pattern> 
+</servlet-mapping> 
   
 </web-app>

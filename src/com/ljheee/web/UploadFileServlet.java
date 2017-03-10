@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.ljheee.read.ReadXls;
@@ -29,8 +30,6 @@ public class UploadFileServlet extends HttpServlet {
 	/** 统一的编码格式*/
 	private static final String encode = "UTF-8";
 	
-	File xlsFile1;//全校教学计划
-	File xlsFile2;//教研室计划
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -66,14 +65,17 @@ public class UploadFileServlet extends HttpServlet {
 			//解析请求数据包
 			List<FileItem> fileItems = upload.parseRequest(request);
 			if(null != fileItems){
-				xlsFile1 = (File) fileItems.get(0);
-				xlsFile2 = (File) fileItems.get(1);
+				FileUtils.copyInputStreamToFile(fileItems.get(0).getInputStream(), 
+						new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "1.xls"));
+				FileUtils.copyInputStreamToFile(fileItems.get(1).getInputStream(), 
+						new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
 			}
+			//读取教研室计划
 			ReadXls readXls = ReadXls.getInstance();
-			readXls.setXlsFile(xlsFile1);
+			readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
+			List<?> tList = readXls.getTeacherList();//获取教师列表
+			request.setAttribute("tList", tList);
 			
-			
-			System.out.println(xlsFile1.getName());
 			request.getRequestDispatcher("course_schedule.jsp").forward(request, response);
 			responseMessage(request, response, "上传完成");
 			

@@ -15,6 +15,19 @@ public class Teacher {
 	public Teacher() {
 	}
 
+	
+
+	public String getName() {
+		return name;
+	}
+
+
+
+	public Major getTeachMajor() {
+		return teachMajor;
+	}
+
+
 
 	public Teacher(String name, Major teachMajor) {
 		this.name = name;
