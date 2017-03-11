@@ -151,7 +151,6 @@ public class ReadXls {
 				set.add(name);
 			}
 		}
-
 		return set;
 	}
 
@@ -189,6 +188,12 @@ public class ReadXls {
 		return result;
 	}
 
+	/**
+	 * 获取专业分组
+	 * @param teacherName
+	 * @param majorName
+	 * @return
+	 */
 	public List<String> getGroups(String teacherName, String majorName) {
 		List<String> list = new ArrayList<>();
 

@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@ page language="java"  pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
@@ -94,22 +94,27 @@ tr:nth-child(even) {
 
 </style>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+
 <script type="text/javascript">   
   
-function getTeacher(currTeacher)  
-{  
+function getTeacher(currTeacher){  
     //当前 所选择 的教师名
     var currTeacher = currTeacher;  
     alert(currTeacher);
+    
     //清空 专业选择 下拉选单  
-    //document.all.selMajor.length = 0 ;  
+    document.all.selMajor.length = 0;  
      
     //填充专业选择 下拉选单  
-      
-   $.post('selectMajorServlet', { name: currTeacher} ,function(list) {
-		//$('#fileUploadProcess').html(data);
-	   document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
-	});
+    $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray) {
+		
+ 	document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
+ 	  $("#selMajor").removeAttr("disabled");
+ 
+    for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
+       document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group,i);
+    }
+   },"json");
 
 }  
 </script>
@@ -137,23 +142,20 @@ function getTeacher(currTeacher)
 			<tr>
 				<th>教师姓名</th>
 				<th>教学专业</th>
-				<th>分组</th>
+				<th>可用实验室</th>
 				<th>导出</th>
 			</tr>
 			
 			<tr>
 				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
-						<option value="1" selected = "selected"  >请选择</option>
+						<option value="0" selected = "selected"  >请选择</option>
 						<c:forEach var="item" items="${tList}">
 						<option  value="${item.name}">${item.name}</option>
 						</c:forEach>
 					</select> 
 				</td>
-				<td><select id="selMajor">
+				<td><select id="selMajor" disabled="disabled">
 						<option value="1" selected = "selected"  >请选择</option>
-						<c:forEach var="item" items="${majorList}">
-						<option  value="${item.name}">${item.name}</option>
-						</c:forEach>
 					</select>
 				</td>
 				<td><select>

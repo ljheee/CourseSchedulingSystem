@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.ljheee.read.ReadXls;
 
+import net.sf.json.JSONArray;
+
 
 
 public class SelectMajorServlet extends HttpServlet {
@@ -25,13 +27,18 @@ public class SelectMajorServlet extends HttpServlet {
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		resp.setCharacterEncoding("UTF-8");
+		
 		String name = req.getParameter("name");
 		System.out.println("select:"+name);
 		ReadXls readXls = ReadXls.getInstance();
 		
 		List<?> list = readXls.getTeacherTeachesByName(name);
-		req.setAttribute("majorList", list);
-		req.getRequestDispatcher("course_schedule.jsp").forward(req, resp);
+		JSONArray jsonArray = JSONArray.fromObject(list);
+		resp.getWriter().print(jsonArray);
+		resp.getWriter().flush();
+//		req.setAttribute("majorList", list);
+//		req.getRequestDispatcher("course_schedule.jsp").forward(req, resp);
 	}
 
 }
