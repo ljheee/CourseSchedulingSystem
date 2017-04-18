@@ -12,7 +12,12 @@ import com.ljheee.read.ReadXls;
 import net.sf.json.JSONArray;
 
 
-
+/**
+ * $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray)
+ * 填充专业选择 下拉选单 
+ * @author ljheee
+ *
+ */
 public class SelectMajorServlet extends HttpServlet {
 
 
@@ -33,7 +38,7 @@ public class SelectMajorServlet extends HttpServlet {
 		System.out.println("select:"+name);
 		ReadXls readXls = ReadXls.getInstance();
 		
-		List<?> list = readXls.getTeacherTeachesByName(name);
+		List<?> list = readXls.getTeacherTeachesByName(name);//获取教师实验课程List<Major>
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		resp.getWriter().print(jsonArray);
 		resp.getWriter().flush();

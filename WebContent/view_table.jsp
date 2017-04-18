@@ -4,7 +4,7 @@
 <html>
   <head>
     
-    <title>index page</title>
+    <title>view page</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -106,6 +106,7 @@ tr:nth-child(even) {
 		<ul>
 			<li><a href="import.html">导入教学计划</a></li>
 			<li><a href="course_schedule.jsp">教师排课</a></li>
+			<li><a href="search.jsp">理论课表查询</a></li>
 			<li><a href="view_table.jsp">图表查看</a></li>
 			<li><a href="aboutus.html">其他</a></li>
 		</ul>

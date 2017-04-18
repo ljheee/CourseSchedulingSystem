@@ -73,8 +73,9 @@ public class UploadFileServlet extends HttpServlet {
 			//读取教研室计划
 			ReadXls readXls = ReadXls.getInstance();
 			readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
-			List<?> tList = readXls.getTeacherList();//获取教师列表
-			request.setAttribute("tList", tList);
+			List<?> tList = readXls.getTeacherList();//获取教师列表List<Teacher>
+//			request.setAttribute("tList", tList);
+			request.getSession().setAttribute("tList", tList);
 			
 			request.getRequestDispatcher("course_schedule.jsp").forward(request, response);
 			responseMessage(request, response, "上传完成");

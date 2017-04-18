@@ -1,17 +1,20 @@
-<%@ page language="java"  pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
   <head>
     
-    <title>course schedule page</title>
+    <title>search page</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	
-<style media="screen">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	-->
+	<style media="screen">
 * {
 	margin: 0;
 	padding: 0;
@@ -89,41 +92,37 @@ th, td {
 tr:nth-child(even) {
 	background-color: #f2f200;
 }
-
 </style>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 
 <script type="text/javascript">   
   
-function getTeacher(currTeacher){  
+	function getTeacher(currTeacher){ 
+	$("#selWeek").removeAttr("disabled");
     //当前 所选择 的教师名
     var currTeacher = currTeacher;  
     alert(currTeacher);
     
-    //清空 专业选择 下拉选单  
-    document.all.selMajor.length = 0;  
+    //清空 周数选择 下拉选单  
+    document.all.selWeek.length = 0;  
+    document.all.selWeek.options[0] = new Option("选择周数1-20",i);
      
-    //填充专业选择 下拉选单  
-    $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray) {
-		
- 	document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
- 	  $("#selMajor").removeAttr("disabled");
- 
-    for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
-       document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group,i);
+    //填充周数选择 下拉选单  
+    for(var i=1; i<=20;i++){     //循环添加多个值
+        document.all.selWeek.options[i] = new Option(""+i,i);
     }
-   },"json");
-
+    
+    
 }  
 </script>
-
-
   </head>
+  
+  
   
   <body>
     <header>
     	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
-		实验教学--排课管理<span>教师排课</span>
+		实验教学--排课管理<span>理论课表查询</span>
 	</header>
 	
 	<div class="nav">
@@ -135,16 +134,14 @@ function getTeacher(currTeacher){
 			<li><a href="aboutus.html">其他</a></li>
 		</ul>
 	</div>
-	
 	<div class="content">
-		<table>
+	
+	<table id="teacher_search">
 			<tr>
-				<th>教师姓名</th>
-				<th>教学专业</th>
-				<th>可用实验室</th>
-				<th>导出</th>
+				<th>教师名</th>
+				<th>选择周数</th>
+				<th>查询</th>
 			</tr>
-			
 			<tr>
 				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
 						<option value="0" selected = "selected"  >请选择</option>
@@ -153,25 +150,40 @@ function getTeacher(currTeacher){
 						</c:forEach>
 					</select> 
 				</td>
-				<td><select id="selMajor" disabled="disabled">
-						<option value="1" selected = "selected"  >请选择</option>
+				<td><select id="selWeek" disabled="disabled">
+						<option value="0" selected = "selected"  >请选择</option>
 					</select>
 				</td>
-				<td><select>
-						<option value="1" selected = "selected"  >请选择</option>
-					</select>
-				</td>
-				<td><select>
-						<option value="1" selected = "selected"  >请选择</option>
-					</select>
+				<td>
+					<input type="submit" value="查询">
 				</td>
 			</tr>
-			
-		</table>
-		
-	</div>
-	
-			
+	</table>
+	<hr>
+	<table id="major_search">
+			<tr>
+				<th>专业名</th>
+				<th>选择周数</th>
+				<th>查询</th>
+			</tr>
+			<tr>
+				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<c:forEach var="item" items="${tList}">
+						<option  value="${item.name}">${item.name}</option>
+						</c:forEach>
+					</select> 
+				</td>
+				<td><select id="selWeek" disabled="disabled">
+						<option value="0" selected = "selected"  >请选择</option>
+					</select>
+				</td>
+				<td>
+					<input type="submit" value="查询">
+				</td>
+			</tr>
+	</table>
+	</div>	
 	
 	
 	<footer>Copyright (c) 2017 CourseSchedulingSystem All Rights Reserved.</footer>
