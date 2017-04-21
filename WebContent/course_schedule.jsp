@@ -94,11 +94,11 @@ tr:nth-child(even) {
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 
 <script type="text/javascript">   
-  
+var Teacher;
 function getTeacher(currTeacher){  
     //当前 所选择 的教师名
-    var currTeacher = currTeacher;  
-    alert(currTeacher);
+    Teacher= currTeacher;  
+    alert(Teacher);
     
     //清空 专业选择 下拉选单  
     document.all.selMajor.length = 0;  
@@ -107,14 +107,31 @@ function getTeacher(currTeacher){
     $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray) {
 		
  	document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
- 	  $("#selMajor").removeAttr("disabled");
+ 	$("#selMajor").removeAttr("disabled");
  
     for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
        document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group,i);
     }
-   },"json");
-
+   	},"json");
+    
+//	var thisMajor = $('#selMajor option:selected').text();
+//	alert(thisMajor);
 }  
+
+function finishSelectMajor(curMajor){  
+	alert(curMajor);
+	
+	$.post('resultServlet', {teacherName: Teacher,majorName:curMajor} ,function(jsonArray) {
+		
+	 	document.all.okOption.options[document.all.selMajor.length] = new Option("ljh",'');
+	 	$("#okOption").removeAttr("disabled");
+	 
+	    for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
+	       document.all.okOption.options[i] = new Option(jsonArray[i],i);
+	    }
+	   	},"json");
+	
+}
 </script>
 
 
@@ -141,7 +158,7 @@ function getTeacher(currTeacher){
 			<tr>
 				<th>教师姓名</th>
 				<th>教学专业</th>
-				<th>可用实验室</th>
+				<th>可选方案</th>
 				<th>导出</th>
 			</tr>
 			
@@ -153,11 +170,11 @@ function getTeacher(currTeacher){
 						</c:forEach>
 					</select> 
 				</td>
-				<td><select id="selMajor" disabled="disabled">
+				<td><select id="selMajor" disabled="disabled" onChange="finishSelectMajor(this.options[this.selectedIndex].text)">
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
 				</td>
-				<td><select>
+				<td><select id="okOption" disabled="disabled">
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
 				</td>

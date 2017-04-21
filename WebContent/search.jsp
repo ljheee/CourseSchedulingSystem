@@ -105,7 +105,7 @@ tr:nth-child(even) {
     
     //清空 周数选择 下拉选单  
     document.all.selWeek.length = 0;  
-    document.all.selWeek.options[0] = new Option("选择周数1-20",i);
+    document.all.selWeek.options[0] = new Option("选择周数1-20",0);
      
     //填充周数选择 下拉选单  
     for(var i=1; i<=20;i++){     //循环添加多个值
@@ -167,14 +167,14 @@ tr:nth-child(even) {
 				<th>查询</th>
 			</tr>
 			<tr>
-				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
+				<td><select id="selectMajor" onChange="getTeacher(this.options[this.selectedIndex].value)">
 						<option value="0" selected = "selected"  >请选择</option>
 						<c:forEach var="item" items="${tList}">
 						<option  value="${item.name}">${item.name}</option>
 						</c:forEach>
 					</select> 
 				</td>
-				<td><select id="selWeek" disabled="disabled">
+				<td><select id="selWeek2" disabled="disabled">
 						<option value="0" selected = "selected"  >请选择</option>
 					</select>
 				</td>
