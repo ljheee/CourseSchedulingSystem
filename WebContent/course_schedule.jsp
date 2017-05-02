@@ -95,6 +95,9 @@ tr:nth-child(even) {
 
 <script type="text/javascript">   
 var Teacher;
+var Major;
+var Begin;
+var End;
 function getTeacher(currTeacher){  
     //当前 所选择 的教师名
     Teacher= currTeacher;  
@@ -120,8 +123,15 @@ function getTeacher(currTeacher){
 
 function finishSelectMajor(curMajor){  
 	alert(curMajor);
-	
-	$.post('resultServlet', {teacherName: Teacher,majorName:curMajor} ,function(jsonArray) {
+	Major = curMajor;
+}
+
+function finishSelectBeginWeek(beginweek){ 
+	Begin = beginweek;
+}
+function finishSelectEndWeek(endweek){ 
+	End = endweek;
+	$.post('resultServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End} ,function(jsonArray) {
 		
 	 	document.all.okOption.options[document.all.selMajor.length] = new Option("ljh",'');
 	 	$("#okOption").removeAttr("disabled");
@@ -130,7 +140,6 @@ function finishSelectMajor(curMajor){
 	       document.all.okOption.options[i] = new Option(jsonArray[i],i);
 	    }
 	   	},"json");
-	
 }
 </script>
 
@@ -158,6 +167,8 @@ function finishSelectMajor(curMajor){
 			<tr>
 				<th>教师姓名</th>
 				<th>教学专业</th>
+				<th>开始周</th>
+				<th>结束周</th>
 				<th>可选方案</th>
 				<th>导出</th>
 			</tr>
@@ -172,6 +183,54 @@ function finishSelectMajor(curMajor){
 				</td>
 				<td><select id="selMajor" disabled="disabled" onChange="finishSelectMajor(this.options[this.selectedIndex].text)">
 						<option value="1" selected = "selected"  >请选择</option>
+					</select>
+				</td>
+				<td><select id="beginWeek" onChange="finishSelectBeginWeek(this.options[this.selectedIndex].text)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<option value="1" >1</option>
+						<option value="2" >2</option>
+						<option value="3" >3</option>
+						<option value="4" >4</option>
+						<option value="5" >5</option>
+						<option value="6" >6</option>
+						<option value="7" >7</option>
+						<option value="8" >8</option>
+						<option value="9" >9</option>
+						<option value="10" >10</option>
+						<option value="10" >10</option>
+						<option value="12" >12</option>
+						<option value="13" >13</option>
+						<option value="14" >14</option>
+						<option value="15" >15</option>
+						<option value="16" >16</option>
+						<option value="17" >17</option>
+						<option value="18" >18</option>
+						<option value="19" >19</option>
+						<option value="20" >20</option>
+					</select>
+				</td>
+				<td><select id="endWeek" onChange="finishSelectEndWeek(this.options[this.selectedIndex].text)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<option value="1" >1</option>
+						<option value="2" >2</option>
+						<option value="3" >3</option>
+						<option value="4" >4</option>
+						<option value="5" >5</option>
+						<option value="6" >6</option>
+						<option value="7" >7</option>
+						<option value="8" >8</option>
+						<option value="9" >9</option>
+						<option value="10" >10</option>
+						<option value="10" >10</option>
+						<option value="12" >12</option>
+						<option value="13" >13</option>
+						<option value="14" >14</option>
+						<option value="15" >15</option>
+						<option value="16" >16</option>
+						<option value="17" >17</option>
+						<option value="18" >18</option>
+						<option value="19" >19</option>
+						<option value="20" >20</option>
 					</select>
 				</td>
 				<td><select id="okOption" disabled="disabled">

@@ -27,6 +27,11 @@ public class DbUtil {
             e.printStackTrace();
         } 
 	}
+
+	public static boolean checkTable(int beginWeek, int endWeek, int i, int j) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 		
 	
 	
