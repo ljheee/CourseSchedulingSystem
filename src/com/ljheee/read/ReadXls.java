@@ -18,7 +18,7 @@ import jxl.WorkbookSettings;
 import jxl.read.biff.BiffException;
 
 /**
- * 读取xls文件
+ * 读取--学院教学计划（xls文件）
  */
 public class ReadXls {
 	
@@ -55,6 +55,7 @@ public class ReadXls {
 		} catch (BiffException | IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("small sheet="+sheet);
 	}
 
 	Teacher teacher = null;

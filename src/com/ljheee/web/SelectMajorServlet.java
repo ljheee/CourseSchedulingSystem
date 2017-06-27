@@ -1,5 +1,6 @@
 package com.ljheee.web;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,11 +35,13 @@ public class SelectMajorServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setCharacterEncoding("UTF-8");
 		
-		String name = req.getParameter("name");
-		System.out.println("select:"+name);
-		ReadXls readXls = ReadXls.getInstance();
+		String teacherName = req.getParameter("name");
+		System.out.println("select:"+teacherName);
 		
-		List<?> list = readXls.getTeacherTeachesByName(name);//获取教师实验课程List<Major>
+		ReadXls readXls = ReadXls.getInstance();
+		readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
+		
+		List<?> list = readXls.getTeacherTeachesByName(teacherName);//获取教师实验课程List<Major>
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		resp.getWriter().print(jsonArray);
 		resp.getWriter().flush();

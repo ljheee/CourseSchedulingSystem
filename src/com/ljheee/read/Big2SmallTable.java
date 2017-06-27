@@ -43,11 +43,12 @@ public class Big2SmallTable {
 		} catch (BiffException | IOException e) {
 			e.printStackTrace();
 		}
+		System.out.println("big sheet="+sheet);
 	}
 	
 	
 	public static Big2SmallTable getInstance(File f){
-		if(big2SmallTable==null){
+		if(big2SmallTable == null && (f != null)){
 			big2SmallTable = new Big2SmallTable(f);
 		}
 		return big2SmallTable;

@@ -6,7 +6,7 @@
   </welcome-file-list>
   <servlet>
     <servlet-name>treat</servlet-name>
-    <servlet-class>com.ljheee.web.MyServlet</servlet-class>
+    <servlet-class>com.ljheee.web.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>treat</servlet-name>

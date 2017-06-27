@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
  * @author ljheee
  *
  */
-public class MyServlet extends HttpServlet {
+public class LoginServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,12 +26,7 @@ public class MyServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		pageType = request.getParameter("yemian");
-//		HttpSession  session = request.getSession();
-		
-		
+		doPost(request, response);
 	}
 
 	

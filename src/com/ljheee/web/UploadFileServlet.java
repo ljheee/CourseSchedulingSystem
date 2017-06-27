@@ -77,8 +77,9 @@ public class UploadFileServlet extends HttpServlet {
 //			request.setAttribute("tList", tList);
 			request.getSession().setAttribute("tList", tList);
 			
+			readXls.close();
 			request.getRequestDispatcher("course_schedule.jsp").forward(request, response);
-			responseMessage(request, response, "上传完成");
+//			responseMessage(request, response, "上传完成");
 			
 		} catch(Exception e) {
 			e.printStackTrace();

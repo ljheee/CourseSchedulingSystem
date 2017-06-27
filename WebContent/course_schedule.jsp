@@ -122,29 +122,48 @@ function getTeacher(currTeacher){
 }  
 
 function finishSelectMajor(curMajor){  
-	alert(curMajor);
 	Major = curMajor;
+	alert(Major);
 }
 
 function finishSelectBeginWeek(beginweek){ 
 	Begin = beginweek;
 }
+
 function finishSelectEndWeek(endweek){ 
 	End = endweek;
 	$.post('resultServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End} ,function(jsonArray) {
 		
-	 	document.all.okOption.options[document.all.selMajor.length] = new Option("ljh",'');
-	 	$("#okOption").removeAttr("disabled");
+	 	document.all.okTime.options[document.all.okTime.length] = new Option("okTime",'');
+	 	$("#okTime").removeAttr("disabled");
 	 
-	    for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
-	       document.all.okOption.options[i] = new Option(jsonArray[i],i);
+	    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
+	       document.all.okTime.options[i] = new Option(jsonArray[i],i);
 	    }
+	    
+	   	},"json");
+}
+
+
+function finishSelectOkTime(okTime){ 
+	
+	End = endweek;
+	$.get('resultServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:okTime} ,function(jsonArray) {
+		
+	 	document.all.okRoom.options[document.all.okRoom.length] = new Option("okRoom",'');
+	 	$("#okRoom").removeAttr("disabled");
+	 
+	    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
+	       document.all.okRoom.options[i] = new Option(jsonArray[i],i);
+	    }
+	    
 	   	},"json");
 }
 </script>
 
-
   </head>
+  
+  
   
   <body>
     <header>
@@ -162,20 +181,25 @@ function finishSelectEndWeek(endweek){
 		</ul>
 	</div>
 	
+	
 	<div class="content">
+	<p> 1、可选的实验课时间段：由教师、和学生专业理论课筛选后的空闲时间段决定（起止周内）</p>
+	<p> 2、可用的实验室：由当前未被使用的实验室决定 </p>
+	<p> 3、请按顺序依次选择 .</p>
+	
 		<table>
 			<tr>
 				<th>教师姓名</th>
 				<th>教学专业</th>
 				<th>开始周</th>
 				<th>结束周</th>
-				<th>可选方案</th>
-				<th>导出</th>
+				<th>可选的时间段</th>
+				<th>可用的实验室</th>
 			</tr>
 			
 			<tr>
 				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
-						<option value="0" selected = "selected"  >请选择</option>
+						<option value="0" selected = "selected">请选择</option>
 						<c:forEach var="item" items="${tList}">
 						<option  value="${item.name}">${item.name}</option>
 						</c:forEach>
@@ -196,7 +220,6 @@ function finishSelectEndWeek(endweek){
 						<option value="7" >7</option>
 						<option value="8" >8</option>
 						<option value="9" >9</option>
-						<option value="10" >10</option>
 						<option value="10" >10</option>
 						<option value="12" >12</option>
 						<option value="13" >13</option>
@@ -221,7 +244,6 @@ function finishSelectEndWeek(endweek){
 						<option value="8" >8</option>
 						<option value="9" >9</option>
 						<option value="10" >10</option>
-						<option value="10" >10</option>
 						<option value="12" >12</option>
 						<option value="13" >13</option>
 						<option value="14" >14</option>
@@ -233,11 +255,11 @@ function finishSelectEndWeek(endweek){
 						<option value="20" >20</option>
 					</select>
 				</td>
-				<td><select id="okOption" disabled="disabled">
+				<td><select id="okTime" disabled="disabled" onChange="finishSelectOkTime(this.options[this.selectedIndex].text)">
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
 				</td>
-				<td><select>
+				<td><select id="okRoom" disabled="disabled">
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
 				</td>

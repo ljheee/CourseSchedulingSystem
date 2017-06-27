@@ -1,9 +1,13 @@
 package com.ljheee.bean;
 
+import java.io.Serializable;
+
 /**
  * 专业
  */
-public class Major {
+public class Major implements Serializable{
+
+	private static final long serialVersionUID = -756164971236668046L;
 
 	/* 专业名称 */
 	public String name;

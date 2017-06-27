@@ -1,10 +1,14 @@
 package com.ljheee.bean;
 
+import java.io.Serializable;
+
 /**
  *实验课程
  */
-public class Course {
+public class Course implements Serializable{
 	
+	private static final long serialVersionUID = 6419167894176985100L;
+
 	/*课程名称*/
 	public String name;
 	
