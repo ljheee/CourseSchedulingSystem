@@ -54,7 +54,7 @@ public class ResultServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String teacherName = request.getParameter("teacherName");
-		String majorName = request.getParameter("majorName").split("#")[0];//nullPointer
+		String majorName = request.getParameter("majorName");//nullPointer
 		int beginWeek = 0;
 		int endWeek = 0;
 		try {
@@ -63,8 +63,6 @@ public class ResultServlet extends HttpServlet {
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
-		
-		//Todo 添加数据库查询的实验室结果（beginWeek-endWeek）
 		
 		
 		ArrayList<String> list = new ArrayList<>();
@@ -76,7 +74,6 @@ public class ResultServlet extends HttpServlet {
 			for (int j = 0; j < free[0].length; j++) {
 				if(free[i][j]==0){//okTime
 					list.add(StringUtil.getWeekAndJieCi2(i, j));//可选时间-可能很多种
-//					if(DbUtil.checkTable(beginWeek,endWeek,i,j));
 				}
 			}
 		}

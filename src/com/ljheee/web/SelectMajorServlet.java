@@ -45,8 +45,6 @@ public class SelectMajorServlet extends HttpServlet {
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		resp.getWriter().print(jsonArray);
 		resp.getWriter().flush();
-//		req.setAttribute("majorList", list);
-//		req.getRequestDispatcher("course_schedule.jsp").forward(req, resp);
 	}
 
 }

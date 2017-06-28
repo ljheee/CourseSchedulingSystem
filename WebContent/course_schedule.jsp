@@ -114,7 +114,7 @@ function getTeacher(currTeacher){
  	$("#selMajor").removeAttr("disabled");
  
     for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
-       document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group,i);
+       document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group+'#'+jsonArray[i].course.name,i);
     }
    	},"json");
     
@@ -167,7 +167,11 @@ function write2DB(){
 	
 	$.post('writeDbServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:OkTime,myroom:myRoom} ,function(flag) {
 		
-		alert(flag[1]);
+		var msg;
+		for(var i=0; i < flag.length;i++){ 
+			msg += flag[i];
+		}
+		alert(msg);
 	    
 	   	});
 }
