@@ -6,6 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -62,7 +66,7 @@ public class DbUtil {
 	 * 起始到结束周，写入排课
 	 * 写入DB多张表
 	 */
-	public static boolean sureRoom(int begin, int end,int row,int col,String classRoom){
+	public static synchronized boolean sureRoom(int begin, int end,int row,int col,String classRoom){
 		boolean result = false;
 		for (int i = begin; i <= end; i++) {
 			addClass2Db(i, row, col, classRoom);//写入DB前已经检查过，此处直接写DB
@@ -111,7 +115,7 @@ public class DbUtil {
 			String sql = "select day"+col+" from week"+tableIndex+" where id="+row;
 			ResultSet rs = sm.executeQuery(sql);
 			rs.next();
-			String rooms = rs.getString("day"+col);
+			String rooms = rs.getString("day"+col);//day7
 			if( rooms == null || !rooms.contains(classRoom)){//classRoom此时段无人用
 				result = true;
 			}else{
@@ -137,7 +141,7 @@ public class DbUtil {
 	 * @param col
 	 * @return
 	 */
-	private static String getUsedRooms(int weekIndex,int row,int col){
+	public static String getUsedRooms(int weekIndex,int row,int col){
 		String result = null;
 		try {
 			sm = con.createStatement();
@@ -155,6 +159,28 @@ public class DbUtil {
 			}
 		}
 		return result;
+	}
+	
+	/**
+	 * 返回 起始到结束周，所有已用实验室（不重复）
+	 * @param begin
+	 * @param end
+	 * @param row
+	 * @param col
+	 * @return
+	 */
+	public static Set<String> getAllUsedRooms(int begin ,int end ,int row,int col){
+		Set<String> set = new HashSet<>();
+		
+		for (int i = begin; i <= end; i++) {
+			String room = getUsedRooms(i, row, col);
+			if (room != null) {
+				List<String> str = Arrays.asList(room.split("-")); 
+				set.addAll(str);
+			}
+		}
+		
+		return set;
 	}
 	
 	/**

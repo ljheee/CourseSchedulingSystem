@@ -12,14 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ljheee.bean.TheoryMajor;
 import com.ljheee.bean.TheoryTeacher;
-import com.ljheee.db.DbUtil;
-import com.ljheee.db.UsedClassRoomException;
 import com.ljheee.read.Big2SmallTable;
 import com.ljheee.util.MatrixUtil;
 import com.ljheee.util.StringUtil;
-import com.ljheee.util.StringUtil.RowCol;
 
 import net.sf.json.JSONArray;
+
 /**
  * 
  * @author ljheee
@@ -47,40 +45,8 @@ public class ResultServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		
-		System.out.println("in----------------");
-		String teacherName = request.getParameter("teacherName");
-		String majorName = request.getParameter("majorName").split("#")[0];//nullPointer
-		int beginWeek = 0;
-		int endWeek = 0;
-		try {
-			beginWeek = Integer.parseInt(request.getParameter("beginWeek"));
-			endWeek = Integer.parseInt(request.getParameter("endWeek"));
-		} catch (NumberFormatException e) {
-			e.printStackTrace();
-		}
-		
-		String okTime = request.getParameter("oktime");
-		StringUtil.RowCol rc = StringUtil.getRowCol(okTime);
-		//Todo 添加数据库查询的实验室结果（beginWeek-endWeek）
-		try {
-			if (DbUtil.checkTable(beginWeek , endWeek, rc.row , rc.col, "609")) {
-				DbUtil.sureRoom(beginWeek , endWeek, rc.row , rc.col, "609");
-				System.out.println("ok6666666666666");
-			}
-		} catch (UsedClassRoomException e) {
-			e.printStackTrace();
-		}
-		
-//		JSONArray jsonArray = JSONArray.fromObject(list);
-//		response.getWriter().print(jsonArray);
-//		response.getWriter().flush();
-		
+		doPost(request, response);
 	}
-	
-	
 	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -4,6 +4,20 @@
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
+  
+  <!-- 切记，不要在业务代码中用try {}catch{}代码手动捕捉异常，
+而是用throw抛出异常让容器来处理，否则就不能达到预定的效果。 -->
+  <error-page>   
+        <exception-type>com.ljheee.db.UsedClassRoomException</exception-type>   
+        <location>/error.jsp</location>   
+  </error-page>  
+  
+  <error-page> 
+        <exception-type>java.lang.Exception</exception-type> 
+        <location>/error.jsp</location> 
+  </error-page> 
+  
+  
   <servlet>
     <servlet-name>treat</servlet-name>
     <servlet-class>com.ljheee.web.LoginServlet</servlet-class>

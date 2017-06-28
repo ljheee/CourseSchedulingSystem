@@ -1,4 +1,4 @@
-<%@ page language="java"  pageEncoding="UTF-8"%>
+<%@ page language="java"  pageEncoding="UTF-8" errorPage="error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
@@ -98,6 +98,7 @@ var Teacher;
 var Major;
 var Begin;
 var End;
+var OkTime;
 function getTeacher(currTeacher){  
     //当前 所选择 的教师名
     Teacher= currTeacher;  
@@ -146,18 +147,29 @@ function finishSelectEndWeek(endweek){
 
 
 function finishSelectOkTime(okTime){ 
-	
-	End = endweek;
-	$.get('resultServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:okTime} ,function(jsonArray) {
+	OkTime = okTime;
+	$.post('usedRoomServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:okTime} ,function(jsonArray) {
 		
-	 	document.all.okRoom.options[document.all.okRoom.length] = new Option("okRoom",'');
-	 	$("#okRoom").removeAttr("disabled");
+	 	document.all.usedRoom.options[document.all.usedRoom.length] = new Option("usedRoom",'');
+	 	$("#usedRoom").removeAttr("disabled");
 	 
 	    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
-	       document.all.okRoom.options[i] = new Option(jsonArray[i],i);
+	       document.all.usedRoom.options[i] = new Option(jsonArray[i],i);
 	    }
 	    
 	   	},"json");
+}
+
+//最终写入DB
+function write2DB(){
+	var myRoom = document.getElementById("myRoom").value;
+	alert("即将使用实验室"+myRoom+"\n---写入后无法修改！---");
+	
+	$.post('writeDbServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:OkTime,myroom:myRoom} ,function(flag) {
+		
+		alert(flag[1]);
+	    
+	   	});
 }
 </script>
 
@@ -194,7 +206,8 @@ function finishSelectOkTime(okTime){
 				<th>开始周</th>
 				<th>结束周</th>
 				<th>可选的时间段</th>
-				<th>可用的实验室</th>
+				<th>已用的实验室</th>
+				<th>输入实验室</th>
 			</tr>
 			
 			<tr>
@@ -259,9 +272,15 @@ function finishSelectOkTime(okTime){
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
 				</td>
-				<td><select id="okRoom" disabled="disabled">
+				<td><select id="usedRoom" disabled="disabled">
 						<option value="1" selected = "selected"  >请选择</option>
 					</select>
+				</td>
+				<td>
+					<input type="number" placeholder="输入例如617" id="myRoom" >
+				</td>
+				<td>
+					<input type="button" value="提交" onclick="write2DB()">
 				</td>
 			</tr>
 			

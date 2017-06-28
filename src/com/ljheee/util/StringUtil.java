@@ -90,7 +90,7 @@ public class StringUtil {
 		case "星期六":
 			result = 5;
 			break;
-		case "星期七":
+		case "星期日":
 			result = 6;
 			break;
 		default:
