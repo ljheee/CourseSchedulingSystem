@@ -114,12 +114,9 @@ function getTeacher(currTeacher){
  	$("#selMajor").removeAttr("disabled");
  
     for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
-       document.all.selMajor.options[i] = new Option(jsonArray[i].level+jsonArray[i].name+jsonArray[i].numStudent+'--'+jsonArray[i].group+'#'+jsonArray[i].course.name,i);
+       document.all.selMajor.options[i] = new Option(jsonArray[i].level+'级'+jsonArray[i].name+'#'+jsonArray[i].numStudent+'人--'+jsonArray[i].group,i);
     }
    	},"json");
-    
-//	var thisMajor = $('#selMajor option:selected').text();
-//	alert(thisMajor);
 }  
 
 function finishSelectMajor(curMajor){  
@@ -133,6 +130,9 @@ function finishSelectBeginWeek(beginweek){
 
 function finishSelectEndWeek(endweek){ 
 	End = endweek;
+	
+	//清空 okTime 下拉选单  
+    document.all.okTime.length = 0; 
 	$.post('resultServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End} ,function(jsonArray) {
 		
 	 	document.all.okTime.options[document.all.okTime.length] = new Option("okTime",'');
@@ -148,6 +148,9 @@ function finishSelectEndWeek(endweek){
 
 function finishSelectOkTime(okTime){ 
 	OkTime = okTime;
+	
+	//清空 usedRoom 下拉选单  
+    document.all.usedRoom.length = 0; 
 	$.post('usedRoomServlet', {teacherName: Teacher,majorName:Major,beginWeek:Begin,endWeek:End,oktime:okTime} ,function(jsonArray) {
 		
 	 	document.all.usedRoom.options[document.all.usedRoom.length] = new Option("usedRoom",'');
@@ -191,7 +194,7 @@ function write2DB(){
 		<ul>
 			<li><a href="import.html">导入教学计划</a></li>
 			<li><a href="course_schedule.jsp">教师排课</a></li>
-			<li><a href="search.jsp">理论课表查询</a></li>
+			<li><a href="search.jsp">相关查询</a></li>
 			<li><a href="view_table.jsp">图表查看</a></li>
 			<li><a href="aboutus.html">其他</a></li>
 		</ul>
@@ -199,9 +202,9 @@ function write2DB(){
 	
 	
 	<div class="content">
-	<p> 1、可选的实验课时间段：由教师、和学生专业理论课筛选后的空闲时间段决定（起止周内）</p>
-	<p> 2、可用的实验室：由当前未被使用的实验室决定 </p>
-	<p> 3、请按顺序依次选择 .</p>
+	<p> 1、请按顺序依次选择 .</p>
+	<p> 2、可选的实验课时间段：由教师、和学生专业理论课筛选后的空闲时间段决定（起止周内）</p>
+	<p> 3、可用的实验室：由当前未被使用的实验室决定 </p>
 	
 		<table>
 			<tr>
@@ -223,7 +226,7 @@ function write2DB(){
 					</select> 
 				</td>
 				<td><select id="selMajor" disabled="disabled" onChange="finishSelectMajor(this.options[this.selectedIndex].text)">
-						<option value="1" selected = "selected"  >请选择</option>
+						<option value="0" selected = "selected"  >请选择</option>
 					</select>
 				</td>
 				<td><select id="beginWeek" onChange="finishSelectBeginWeek(this.options[this.selectedIndex].text)">

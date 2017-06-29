@@ -120,16 +120,21 @@ public class Big2SmallTable {
 
 	/**
 	 * 获取指定专业TheoryMajor，1-20周理论课表
-	 * @param levelAndName，例如2014级软件工程
+	 * @param levelAndName，例如   2014级软件工程
 	 * @return
 	 */
 	public TheoryMajor getTheoryMajor(String levelAndName){
 		
-		TheoryMajor tm = new TheoryMajor(levelAndName);
-		
+		TheoryMajor tm = null;
+		System.out.println("in getTheoryMajor````````````````````````");
 		for (int i = 0; i < rows; i++) {
 			
 			if(levelAndName.equals(sheet.getCell(colOfMajor,i).getContents().trim())){
+				if(tm == null){
+					tm = new TheoryMajor(levelAndName);
+				}
+				
+				System.out.println("in equals````````````````````````");
 				Cell[] oneRow = sheet.getRow(i);
 				String[] strs = oneRow[colOfBeginEndWeek].getContents().trim().split("-");
 				int begin = Integer.parseInt(strs[0]);

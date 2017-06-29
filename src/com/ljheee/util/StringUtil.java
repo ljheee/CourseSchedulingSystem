@@ -1,6 +1,5 @@
 package com.ljheee.util;
 
-import com.ljheee.util.StringUtil.RowCol;
 
 /**
  * 字符串工具类
@@ -101,6 +100,7 @@ public class StringUtil {
 
 	/**
 	 * 根据二维矩阵x,y，返回此课=星期几   第几-几节
+	 * 例如：由(3,1) 返回星期一第5、6节
 	 * @param x 课表横排，取值0-4[对应5个上课时间段]
 	 * @param y 课表竖排，取值0-6[对应一周7天]
 	 * @return
@@ -116,6 +116,13 @@ public class StringUtil {
 		return result;
 	}
 	
+	/**
+	 * 根据二维矩阵x,y，返回此课=星期几   第几-几节
+	 * 例如：由(3,1) 返回星期一第5、6节
+	 * @param x 课表横排row，取值0-4[对应5个上课时间段]
+	 * @param y 课表竖排col，取值0-6[对应一周7天]
+	 * @return
+	 */
 	public static String getWeekAndJieCi2(int x,int y) {
 		String[] result = getWeekAndJieCi(x,y);
 		return result[0]+result[1];

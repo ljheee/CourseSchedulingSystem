@@ -10,24 +10,19 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.ljheee.bean.TheoryMajor;
 import com.ljheee.bean.TheoryTeacher;
+import com.ljheee.bean.WeekClass;
 import com.ljheee.read.Big2SmallTable;
-import com.ljheee.util.MatrixUtil;
 import com.ljheee.util.StringUtil;
 
 import net.sf.json.JSONArray;
 
-/**
- * 
- * @author ljheee
- *
- */
-@WebServlet("/resultServlet")
-public class ResultServlet extends HttpServlet {
+@WebServlet("/teacherSearch")
+public class TeacherSearch extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	Big2SmallTable big2SmallTable = null;
+
+	private Big2SmallTable big2SmallTable = null;
 	
 	
 	@Override
@@ -43,25 +38,20 @@ public class ResultServlet extends HttpServlet {
 		big2SmallTable.close();
 		super.destroy();
 	}
-
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doPost(request, response);
 	}
-	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
 		String teacherName = request.getParameter("teacherName");
-		String majorName = request.getParameter("majorName").split("#")[0];//nullPointer
-		System.out.println("resultServlet majorName="+majorName);
 		
 		int beginWeek = 0;
-		int endWeek = 0;
 		try {
 			beginWeek = Integer.parseInt(request.getParameter("beginWeek"));
-			endWeek = Integer.parseInt(request.getParameter("endWeek"));
 		} catch (NumberFormatException e) {
 			e.printStackTrace();
 		}
@@ -69,13 +59,13 @@ public class ResultServlet extends HttpServlet {
 		
 		ArrayList<String> list = new ArrayList<>();
 		TheoryTeacher tt = big2SmallTable.getTheoryTeacher(teacherName);//"黄华军"
-		TheoryMajor tm = big2SmallTable.getTheoryMajor(majorName);//"2014级软件工程"    //tm == nullPointer
-		MatrixUtil.firstCalculate(tt, tm);
-		int[][] free = MatrixUtil.getResult(beginWeek, endWeek);//起始周
-		for (int i = 0; i < free.length; i++) {
-			for (int j = 0; j < free[0].length; j++) {
-				if(free[i][j]==0){//okTime
-					list.add(StringUtil.getWeekAndJieCi2(i, j));//可选时间-可能很多种
+		WeekClass wc = tt.getTheoryTable(beginWeek);//获取该教师，指定周数下的  空课时间段
+		
+		int arr[][] = wc.week;
+		for (int i = 0; i < arr.length; i++) {
+			for (int j = 0; j < arr[0].length; j++) {
+				if(arr[i][j] == 0){//teacher free time
+					list.add(StringUtil.getWeekAndJieCi2(i, j));
 				}
 			}
 		}
@@ -85,6 +75,4 @@ public class ResultServlet extends HttpServlet {
 		response.getWriter().flush();
 	}
 
-	
-	
 }

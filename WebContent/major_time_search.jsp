@@ -5,7 +5,7 @@
 <html>
   <head>
     
-    <title>相关查询</title>
+    <title>学生专业理论课-空闲时间查询</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -92,8 +92,6 @@ th, td {
 tr:nth-child(even) {
 	background-color: #f2f200;
 }
-
-#search{margin:16px;}
 </style>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 
@@ -124,7 +122,7 @@ tr:nth-child(even) {
   <body>
     <header>
     	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
-		实验教学--排课管理<span>相关查询</span>
+		实验教学--排课管理<span>学生专业理论课-空闲时间查询</span>
 	</header>
 	
 	<div class="nav">
@@ -138,10 +136,35 @@ tr:nth-child(even) {
 	</div>
 	<div class="content">
 	
-	<h4> 相关查询 </h4>
-	<div id="search"> <a href="teacher_time_search.jsp">教师理论课--空闲时间查询</a></div>
-	<div id="search"> <a href="major_time_search.jsp">学生专业理论课--空闲时间查询</a></div>
-	<div id="search"> <a href="lab_time_search.jsp">实验室-空闲时间查询</a></div>
+	<h4> 学生专业理论课-空闲时间查询 </h4>
+	
+	
+	<hr>
+	<table id="major_search">
+			<tr>
+				<th>专业名</th>
+				<th>选择周数</th>
+				<th>查询</th>
+			</tr>
+			<tr>
+				<td><select id="selectMajor" onChange="getTeacher(this.options[this.selectedIndex].value)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<c:forEach var="item" items="${tList}">
+						<option  value="${item.name}">${item.name}</option>
+						</c:forEach>
+					</select> 
+				</td>
+				<td><select id="selWeek2" disabled="disabled">
+						<option value="0" selected = "selected"  >请选择</option>
+					</select>
+				</td>
+				<td>
+					<input type="submit" value="查询">
+				</td>
+			</tr>
+	</table>
+	
+	
 	
 	</div>	
 	

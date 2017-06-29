@@ -100,14 +100,15 @@ public class DbUtil {
 	}
 	
 	/**
-	 * 检查[单周] [row,col]节课，是否可用
-	 * @param tableIndex
-	 * @param row
-	 * @param col
-	 * @return
+	 * 检查[单周] [row,col]节课，classRoom是否可用
+	 * @param tableIndex  	[1-20周]
+	 * @param row			[1-5]
+	 * @param col			[1-7]
+	 * @param classRoom		实验室
+	 * @return				true代表classRoom无人用
 	 * @throws UsedClassRoomException 
 	 */
-	private static boolean checkClass(int tableIndex, int row, int col,String classRoom) throws UsedClassRoomException {
+	public static boolean checkClass(int tableIndex, int row, int col,String classRoom) throws UsedClassRoomException {
 		boolean result = false;
 		try {
 			sm = con.createStatement();

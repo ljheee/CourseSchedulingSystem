@@ -106,7 +106,7 @@ tr:nth-child(even) {
 		<ul>
 			<li><a href="import.html">导入教学计划</a></li>
 			<li><a href="course_schedule.jsp">教师排课</a></li>
-			<li><a href="search.jsp">理论课表查询</a></li>
+			<li><a href="search.jsp">相关查询</a></li>
 			<li><a href="view_table.jsp">图表查看</a></li>
 			<li><a href="aboutus.html">其他</a></li>
 		</ul>

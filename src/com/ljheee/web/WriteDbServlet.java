@@ -29,7 +29,7 @@ public class WriteDbServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String teacherName = request.getParameter("teacherName");
-		String majorName = request.getParameter("majorName");//nullPointer
+		String majorName = request.getParameter("majorName").split("#")[0];//nullPointer
 		int beginWeek = 0;
 		int endWeek = 0;
 		try {

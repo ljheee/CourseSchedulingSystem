@@ -5,7 +5,7 @@
 <html>
   <head>
     
-    <title>相关查询</title>
+    <title>教师理论课--空闲时间查询</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -92,30 +92,43 @@ th, td {
 tr:nth-child(even) {
 	background-color: #f2f200;
 }
-
-#search{margin:16px;}
 </style>
 <script type="text/javascript" src="js/jquery-1.9.1.js"></script>
 
 <script type="text/javascript">   
+  var Teacher;
   
 	function getTeacher(currTeacher){ 
-	$("#selWeek").removeAttr("disabled");
+		
+	$("#selBeginWeek").removeAttr("disabled");
     //当前 所选择 的教师名
-    var currTeacher = currTeacher;  
-    alert(currTeacher);
+    Teacher = currTeacher;  
+    alert(Teacher);
     
     //清空 周数选择 下拉选单  
-    document.all.selWeek.length = 0;  
-    document.all.selWeek.options[0] = new Option("选择周数1-20",0);
+    document.all.selBeginWeek.length = 0;  
+    document.all.selBeginWeek.options[0] = new Option("选择周数1-20",0);
      
     //填充周数选择 下拉选单  
     for(var i=1; i<=20;i++){     //循环添加多个值
-        document.all.selWeek.options[i] = new Option(""+i,i);
+        document.all.selBeginWeek.options[i] = new Option(""+i,i);
     }
-    
-    
 }  
+	
+	function finishSelectBeginWeek(beginweek){  
+		document.all.freeTime.length = 0; 
+		document.all.freeTime.options[document.all.freeTime.length] = new Option("freeTime",'');
+		$.post('teacherSearch', {teacherName:Teacher,beginWeek:beginweek} ,function(jsonArray) {
+			
+		 	$("#freeTime").removeAttr("disabled");
+		 
+		    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
+		       document.all.freeTime.options[i] = new Option(jsonArray[i],i);
+		    }
+		    
+		},"json");
+	}
+	
 </script>
   </head>
   
@@ -124,7 +137,7 @@ tr:nth-child(even) {
   <body>
     <header>
     	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
-		实验教学--排课管理<span>相关查询</span>
+		实验教学--排课管理<span>教师理论课--空闲时间查询</span>
 	</header>
 	
 	<div class="nav">
@@ -136,12 +149,41 @@ tr:nth-child(even) {
 			<li><a href="aboutus.html">其他</a></li>
 		</ul>
 	</div>
+	
+	
 	<div class="content">
 	
-	<h4> 相关查询 </h4>
-	<div id="search"> <a href="teacher_time_search.jsp">教师理论课--空闲时间查询</a></div>
-	<div id="search"> <a href="major_time_search.jsp">学生专业理论课--空闲时间查询</a></div>
-	<div id="search"> <a href="lab_time_search.jsp">实验室-空闲时间查询</a></div>
+	<h4> 教师理论课-空闲时间查询</h4>
+	<br />
+	<div><li> 教师空闲时间是指：该时间段没有理论课，可作为实验课的备选</li></div>
+	<br />
+	<table id="teacher_search">
+			<tr>
+				<th>教师名</th>
+				<th>选择周</th>
+				<th>空闲时间</th>
+			</tr>
+			<tr>
+				<td><select id="selectTeacher" onChange="getTeacher(this.options[this.selectedIndex].value)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<c:forEach var="item" items="${tList}">
+						<option  value="${item.name}">${item.name}</option>
+						</c:forEach>
+					</select> 
+				</td>
+				<td><select id="selBeginWeek" disabled="disabled" onChange="finishSelectBeginWeek(this.options[this.selectedIndex].text)">
+						<option value="0" selected = "selected" >请选择</option>
+					</select>
+				</td>
+				
+				<td><select id="freeTime" disabled="disabled" >
+						<option value="0" selected = "selected" >空闲时间</option>
+					</select>
+				</td>
+				
+			</tr>
+	</table>
+	
 	
 	</div>	
 	
