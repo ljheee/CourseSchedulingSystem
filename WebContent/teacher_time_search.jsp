@@ -125,7 +125,6 @@ tr:nth-child(even) {
 		    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
 		       document.all.freeTime.options[i] = new Option(jsonArray[i],i);
 		    }
-		    
 		},"json");
 	}
 	

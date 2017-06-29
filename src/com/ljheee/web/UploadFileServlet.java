@@ -2,7 +2,6 @@
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 
 import com.ljheee.read.ReadXls;
 
@@ -79,39 +77,10 @@ public class UploadFileServlet extends HttpServlet {
 			
 			readXls.close();
 			request.getRequestDispatcher("course_schedule.jsp").forward(request, response);
-//			responseMessage(request, response, "上传完成");
 			
 		} catch(Exception e) {
 			e.printStackTrace();
 		} 
-	}
-
-	
-	/**
-	 * 文件上传完（服务器接受文件，并保存到指定目录）
-	 * 返回结果函数---执行脚本
-	 * @param response
-	 * @param state
-	 * @throws IOException 
-	 * @throws ServletException 
-	 */
-	private void responseMessage(HttpServletRequest request,HttpServletResponse response, String str) throws ServletException, IOException {
-		
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8");
-		Writer writer = null;
-		
-		try {
-			writer = response.getWriter();
-			writer.write("<script>");
-			writer.write("alert("+str+")");
-			writer.write("</script>");
-			writer.flush();
-			writer.close();
-		} catch(Exception e) {
-		} finally {
-			IOUtils.closeQuietly(writer);
-		}
 	}
 	
 

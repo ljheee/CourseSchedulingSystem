@@ -97,23 +97,51 @@ tr:nth-child(even) {
 
 <script type="text/javascript">   
   
-	function getTeacher(currTeacher){ 
-	$("#selWeek").removeAttr("disabled");
+var Teacher;
+var Major;
+var Begin;
+
+function getTeacher(currTeacher){  
     //当前 所选择 的教师名
-    var currTeacher = currTeacher;  
-    alert(currTeacher);
+    Teacher= currTeacher;  
+    alert(Teacher);
     
-    //清空 周数选择 下拉选单  
-    document.all.selWeek.length = 0;  
-    document.all.selWeek.options[0] = new Option("选择周数1-20",0);
+    //清空 专业选择 下拉选单  
+    document.all.selMajor.length = 0;  
      
-    //填充周数选择 下拉选单  
-    for(var i=1; i<=20;i++){     //循环添加多个值
-        document.all.selWeek.options[i] = new Option(""+i,i);
+    //填充专业选择 下拉选单  
+    $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray) {
+		
+ 	document.all.selMajor.options[document.all.selMajor.length] = new Option("selectMajor",'');
+ 	$("#selMajor").removeAttr("disabled");
+ 
+    for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
+       document.all.selMajor.options[i] = new Option(jsonArray[i].level+'级'+jsonArray[i].name+'#'+jsonArray[i].numStudent+'人--'+jsonArray[i].group,i);
     }
-    
-    
+   	},"json");
 }  
+
+function finishSelectMajor(curMajor){  
+	$("#beginWeek").removeAttr("disabled");
+	Major = curMajor;
+	alert(Major);
+	
+}
+
+function finishSelectBeginWeek(beginweek){ 
+	Begin = beginweek;
+	$.post('majorSearchServlet', {majorName:Major,beginWeek:beginweek} ,function(jsonArray) {
+		
+	 	$("#freeTime").removeAttr("disabled");
+	 
+	    for(var i=0; i < jsonArray.length;i++){     //循环添加多个值
+	       document.all.freeTime.options[i] = new Option(jsonArray[i],i);
+	    }
+	},"json");
+}
+	
+	
+	
 </script>
   </head>
   
@@ -142,9 +170,10 @@ tr:nth-child(even) {
 	<hr>
 	<table id="major_search">
 			<tr>
-				<th>专业名</th>
+				<th>教师</th>
+				<th>学生专业</th>
 				<th>选择周数</th>
-				<th>查询</th>
+				<th>该专业空闲时间</th>
 			</tr>
 			<tr>
 				<td><select id="selectMajor" onChange="getTeacher(this.options[this.selectedIndex].value)">
@@ -154,12 +183,36 @@ tr:nth-child(even) {
 						</c:forEach>
 					</select> 
 				</td>
-				<td><select id="selWeek2" disabled="disabled">
+				<td><select id="selMajor" disabled="disabled" onChange="finishSelectMajor(this.options[this.selectedIndex].text)">
 						<option value="0" selected = "selected"  >请选择</option>
 					</select>
 				</td>
-				<td>
-					<input type="submit" value="查询">
+				<td><select id="beginWeek" disabled="disabled" onChange="finishSelectBeginWeek(this.options[this.selectedIndex].text)">
+						<option value="0" selected = "selected"  >请选择</option>
+						<option value="1" >1</option>
+						<option value="2" >2</option>
+						<option value="3" >3</option>
+						<option value="4" >4</option>
+						<option value="5" >5</option>
+						<option value="6" >6</option>
+						<option value="7" >7</option>
+						<option value="8" >8</option>
+						<option value="9" >9</option>
+						<option value="10" >10</option>
+						<option value="12" >12</option>
+						<option value="13" >13</option>
+						<option value="14" >14</option>
+						<option value="15" >15</option>
+						<option value="16" >16</option>
+						<option value="17" >17</option>
+						<option value="18" >18</option>
+						<option value="19" >19</option>
+						<option value="20" >20</option>
+					</select>
+				</td>
+				<td><select id="freeTime" disabled="disabled">
+						<option value="0" selected = "selected"  >请选择</option>
+					</select>
 				</td>
 			</tr>
 	</table>
