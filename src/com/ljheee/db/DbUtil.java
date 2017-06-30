@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -24,8 +26,10 @@ public class DbUtil {
 	static PreparedStatement ps;
 	static Statement sm;
 	static ResultSet rs;
+	static SimpleDateFormat sdf;
 	
 	static{
+		sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			con = DriverManager.getConnection(DB_URL , USER , PASS);
@@ -58,6 +62,12 @@ public class DbUtil {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				if(sm != null) sm.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -127,6 +137,7 @@ public class DbUtil {
 		} finally {
 			try {
 				if(rs!=null) rs.close();
+				if(sm!=null) sm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -155,6 +166,7 @@ public class DbUtil {
 		} finally {
 			try {
 				if(rs!=null) rs.close();
+				if(sm!=null) sm.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -208,9 +220,64 @@ public class DbUtil {
 		return result;
 	}
 	
+	/**
+	 * 记录下老师-专业-所选时间-实验室
+	 * @param teacherName
+	 * @param majorName
+	 * @param week
+	 * @param weekAndJieCi
+	 * @param myRoom
+	 * @return
+	 */
+	public static boolean addRecord(String teacherName, String majorName, String week, String weekAndJieCi,
+			String myRoom) {
+		boolean result = false;
+		//INSERT INTO record (`teacher_name`, `major_name`, `week`, `oktime`, `lib_room`, `insert_time`) VALUES ('ljh2', '14级软件工程#30人--1、2班', '1-9,11-19', '星期三第5、6节', '617', '2017-06-30 10:25:59');
+		String sql = "INSERT INTO record (`teacher_name`, `major_name`, `week`, `oktime`, `lib_room`, `insert_time`) VALUES (? , ?, ?, ?, ?, ?);";
+		
+		try {
+			ps = con.prepareStatement(sql);
+			ps.setString(1, teacherName);
+			ps.setString(2, majorName);
+			ps.setString(3, week);
+			ps.setString(4, weekAndJieCi);
+			ps.setString(5, myRoom);
+			ps.setString(6, sdf.format(new Date()));
+			result = ps.execute();
+			
+			if(result == false){
+				result = true;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				if(ps != null) ps.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
 	
-	
-	
+	/**
+	 * 获取Record
+	 * @return
+	 */
+	public static ResultSet getRecords(){
+		ResultSet rs = null;
+		String sql = "select * from record";
+		
+		try {
+			sm = con.createStatement();
+			rs = sm.executeQuery(sql);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
 
 	public static void main(String[] args) throws UsedClassRoomException {
 		
@@ -228,5 +295,7 @@ public class DbUtil {
 		System.out.println(System.currentTimeMillis() - tt);
 		
 	}
+
+	
 
 }

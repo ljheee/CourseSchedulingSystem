@@ -1,18 +1,17 @@
-<%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@ page language="java" import="java.util.*,com.ljheee.db.DbUtil,java.sql.*" 
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 
 <html>
   <head>
     
-    <title>view page</title>
+    <title>图标查看</title>
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
-	<!--
-	<link rel="stylesheet" type="text/css" href="styles.css">
-	-->
 	<style media="screen">
 * {
 	margin: 0;
@@ -112,9 +111,56 @@ tr:nth-child(even) {
 		</ul>
 	</div>
 	
+	<%
+	ResultSet rs = DbUtil.getRecords();
+	pageContext.setAttribute("rs", rs);
+	%>
 	
 	<div class="content">
-		<p>暂无</p>
+		<h3>已选的实验课</h3>
+		<hr />
+		<br />
+		
+		<table>
+			<tr>
+				<th>编号</th>
+				<th>姓名</th>
+				<th>专业</th>
+				<th>起始周</th>
+				<th>实验课时间</th>
+				<th>实验室</th>
+				<th>选课时间</th>
+			</tr>
+			
+		<c:if test="${empty rs}">
+			<p> 尚无选课</p>
+			<tr>
+				<td>000</td>
+				<td>李建华</td>
+				<td>2014级软件工程#42人--1,2班</td>
+				<td>1-13</td>
+				<td>星期四第1,2节</td>
+				<td>600</td>
+				<td>2017-06-30 11:21:59</td>
+			</tr>
+        </c:if>
+			
+			
+			<c:if test="${ not empty rs}">
+			<% 
+			while(rs.next()){%>
+				<tr>
+				<td><%=rs.getInt(1) %></td>
+				<td><%=rs.getString(2) %></td>
+				<td><%=rs.getString(3) %></td>
+				<td><%=rs.getString(4) %></td>
+				<td><%=rs.getString(5) %></td>
+				<td><%=rs.getString(6) %></td>
+				<td><%=rs.getString(7) %></td>
+				</tr>
+			<%}%>
+		    </c:if>
+		</table>
 	</div>
 	
 	

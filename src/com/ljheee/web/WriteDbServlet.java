@@ -29,7 +29,7 @@ public class WriteDbServlet extends HttpServlet {
 		response.setCharacterEncoding("UTF-8");
 		
 		String teacherName = request.getParameter("teacherName");
-		String majorName = request.getParameter("majorName").split("#")[0];//nullPointer
+		String majorName = request.getParameter("majorName");//2014级软件工程#42人--1,2班
 		int beginWeek = 0;
 		int endWeek = 0;
 		try {
@@ -47,7 +47,7 @@ public class WriteDbServlet extends HttpServlet {
 		String errorMsg = null;
 		
 		try {
-			//写入数据库时，再检查
+			//写入数据库时，再检查。要写入起始周 多张表
 			if (DbUtil.checkTable(beginWeek, endWeek, rc.row, rc.col, myRoom)) {
 				result = DbUtil.sureRoom(beginWeek, endWeek, rc.row, rc.col, myRoom);
 			}
@@ -57,15 +57,21 @@ public class WriteDbServlet extends HttpServlet {
 		}
 		
 		
-		if (result == true) {//Todo 记录下老师-专业-所选时间-实验室
-			System.out.println(teacherName+"-"+ majorName+"-"+beginWeek+"-"+beginWeek+"-"+rc.row+"-"+rc.col+"-"+myRoom);
-			ArrayList<String> list = new ArrayList<>();
-			list.add("选择成功,已写入DB");
+		
+		if (result == true) {
 			
+			//记录下老师-专业-所选时间-实验室
+			boolean addRecord = DbUtil.addRecord(teacherName, majorName,beginWeek+"-"+endWeek,StringUtil.getWeekAndJieCi2(rc.row, rc.col), myRoom);
 			
-			JSONArray json = JSONArray.fromObject(list);//发送true
-			response.getWriter().print(json);
-			response.getWriter().flush();
+			if(addRecord == true){
+				System.out.println(teacherName+"-"+ majorName+"-"+beginWeek+"-"+endWeek+"-"+rc.row+"-"+rc.col+"-"+myRoom);
+				ArrayList<String> list = new ArrayList<>();
+				list.add("选择成功,已写入DB");
+				
+				JSONArray json = JSONArray.fromObject(list);//发送true
+				response.getWriter().print(json);
+				response.getWriter().flush();
+			}
 			return;
 			
 		}else{
