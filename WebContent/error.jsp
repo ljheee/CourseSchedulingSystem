@@ -13,9 +13,9 @@
     </div>  
     
   <div>
-  <%-- 
- 	 异常信息是:<%=exception.getMessage()%>
- 	 --%>
+ 
+ 	 异常信息是:<%=exception.getMessage() %>
+ 	 tm=null,请确认所选专业存在于 学校理论课表！
   </div>  
 
 </body>

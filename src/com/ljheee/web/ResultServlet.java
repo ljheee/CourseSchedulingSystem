@@ -68,19 +68,24 @@ public class ResultServlet extends HttpServlet {
 		
 		
 		ArrayList<String> list = new ArrayList<>();
+		big2SmallTable = Big2SmallTable.getInstance(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "1.xls"));
+		big2SmallTable.init();
 		TheoryTeacher tt = big2SmallTable.getTheoryTeacher(teacherName);//"黄华军"
 		TheoryMajor tm = big2SmallTable.getTheoryMajor(majorName);//"2014级软件工程"    //tm == nullPointer
+		
+		
 		MatrixUtil.firstCalculate(tt, tm);
+	
 		int[][] free = MatrixUtil.getResult(beginWeek, endWeek);//起始周
 		for (int i = 0; i < free.length; i++) {
 			for (int j = 0; j < free[0].length; j++) {
 				if(free[i][j]==0){//okTime
-					list.add(StringUtil.getWeekAndJieCi2(i, j));//可选时间-可能很多种
+					list.add(StringUtil.getWeekAndJieCi2(i+1, j+1));//可选时间-可能很多种
 				}
 			}
 		}
 		
-		JSONArray jsonArray = JSONArray.fromObject(list);
+		JSONArray jsonArray = JSONArray.fromObject(list);//返回空闲时间列表
 		response.getWriter().print(jsonArray);
 		response.getWriter().flush();
 	}

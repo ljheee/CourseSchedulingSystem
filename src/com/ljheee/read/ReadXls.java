@@ -71,8 +71,10 @@ public class ReadXls {
 	public List<Teacher> getTeacherList() {
 		List<Teacher> tSet = new ArrayList<>();
 
-		Cell[] tableTitles = sheet.getRow(0);
+		//D:\workspace\.metadata\.plugins\org.eclipse.wst.server.core\tmp0\wtpwebapps\pkxt\xlsFiles\2.xls
+		Cell[] tableTitles = sheet.getRow(0);;
 
+		
 		//匹配表头
 		for (int i = 0; i < tableTitles.length; i++) {
 			switch (tableTitles[i].getContents().trim()) {

@@ -19,8 +19,8 @@ import java.util.Set;
 public class DbUtil {
 	
 	public static final String DB_URL = "jdbc:mysql://localhost:3306/courseschedule";
-	public static final String USER = "abc";
-	public static final String PASS = "abc";
+	public static final String USER = "root";
+	public static final String PASS = "root";
 	
 	static Connection con;
 	static PreparedStatement ps;

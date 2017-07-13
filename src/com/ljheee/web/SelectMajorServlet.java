@@ -31,7 +31,7 @@ public class SelectMajorServlet extends HttpServlet {
 	@Override
 	public void init() throws ServletException {
 		readXls = ReadXls.getInstance();
-		readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
+//		readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
 		super.init();
 	}
 	
@@ -57,6 +57,7 @@ public class SelectMajorServlet extends HttpServlet {
 		String teacherName = req.getParameter("name");
 		System.out.println("select:"+teacherName);
 		
+		readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
 		List<Major> list = readXls.getTeacherTeachesByName(teacherName);//获取教师实验课程List<Major>
 		JSONArray jsonArray = JSONArray.fromObject(list);
 		resp.getWriter().print(jsonArray);

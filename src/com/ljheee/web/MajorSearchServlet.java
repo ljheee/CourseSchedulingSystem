@@ -66,7 +66,7 @@ private Big2SmallTable big2SmallTable = null;
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[0].length; j++) {
 				if(arr[i][j] == 0){//major free time
-					list.add(StringUtil.getWeekAndJieCi2(i, j));
+					list.add(StringUtil.getWeekAndJieCi2(i+1, j+1));//由(3,1) 返回星期一第5、6节
 				}
 			}
 		}

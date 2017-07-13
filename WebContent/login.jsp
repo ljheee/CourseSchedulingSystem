@@ -9,6 +9,9 @@
 <form action="treat" method="post">
     <table id="dba_login" align="center">
 		<tr>
+		<p align="center" color="red">账号:ljh   ,密码：123</p>
+		</tr>
+		<tr>
 		<td>姓名:</td>
 		<td><input type="text" name="userName" size="20" maxlength="10" /></td>
 		</tr>

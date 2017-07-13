@@ -97,7 +97,7 @@ tr:nth-child(even) {
   
   <body>
     <header>
-    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
+    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/pkxt/Exit.jsp'>点击退出</a></div>
 		实验教学--排课管理<span>图表查看</span>
 	</header>
 	

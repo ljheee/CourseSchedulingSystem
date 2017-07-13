@@ -61,7 +61,7 @@ public class WriteDbServlet extends HttpServlet {
 		if (result == true) {
 			
 			//记录下老师-专业-所选时间-实验室
-			boolean addRecord = DbUtil.addRecord(teacherName, majorName,beginWeek+"-"+endWeek,StringUtil.getWeekAndJieCi2(rc.row, rc.col), myRoom);
+			boolean addRecord = DbUtil.addRecord(teacherName, majorName,beginWeek+"-"+endWeek, StringUtil.getWeekAndJieCi2(rc.row, rc.col), myRoom);
 			
 			if(addRecord == true){
 				System.out.println(teacherName+"-"+ majorName+"-"+beginWeek+"-"+endWeek+"-"+rc.row+"-"+rc.col+"-"+myRoom);

@@ -65,7 +65,7 @@ public class TeacherSearch extends HttpServlet {
 		for (int i = 0; i < arr.length; i++) {
 			for (int j = 0; j < arr[0].length; j++) {
 				if(arr[i][j] == 0){//teacher free time
-					list.add(StringUtil.getWeekAndJieCi2(i, j));
+					list.add(StringUtil.getWeekAndJieCi2(i+1, j+1));
 				}
 			}
 		}

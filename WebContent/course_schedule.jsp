@@ -1,4 +1,4 @@
-<%@ page language="java"  pageEncoding="UTF-8" %>
+<%@ page language="java"  pageEncoding="UTF-8"  errorPage="/error.jsp"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
 
 <html>
@@ -110,9 +110,12 @@ function getTeacher(currTeacher){
     //填充专业选择 下拉选单  
     $.post('selectMajorServlet', {name: currTeacher} ,function(jsonArray) {
 		
- 	document.all.selMajor.options[document.all.selMajor.length] = new Option("ljh",'');
+    
+ 	document.all.selMajor.options[document.all.selMajor.length] = new Option("选择专业",'');
  	$("#selMajor").removeAttr("disabled");
- 
+ 	
+ 	var obj = document.getElementById("selMajor");
+ 	obj.options.add(new Option("major",999));
     for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
        document.all.selMajor.options[i] = new Option(jsonArray[i].level+'级'+jsonArray[i].name+'#'+jsonArray[i].numStudent+'人--'+jsonArray[i].group,i);
     }
@@ -186,7 +189,7 @@ function write2DB(){
   
   <body>
     <header>
-    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
+    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/pkxt/Exit.jsp'>点击退出</a></div>
 		实验教学--排课管理<span>教师排课</span>
 	</header>
 	
@@ -206,7 +209,8 @@ function write2DB(){
 	<p> 2、可选的实验课时间段：由教师、和学生专业理论课筛选后的空闲时间段决定（起止周内）。</p>
 	<p> 3、排课顺序先来后到，初始状态  实验室均可用。先选课者 先确定实验室。 </p>
 	<p> 4、一天课程为上午1、2节，3、4节；下午5、6节，7、8节；晚上9、10节。 此系统约定该5个上课时间段用1-5表示。</p>
-	<p> 5、电子楼实验室：602,603,605,607,609,611,613,615,617;403,405,410,411。</p>
+	<p> 5、选完教学专业，会有对话框提示(有弹框提示才算ok)，下拉列表的第一个，选完不弹框，请先选择其他专业，再选第一个就可以了。</p>
+	<p> 6、电子楼实验室：602,603,605,607,609,611,613,615,617;403,405,410,411。</p>
 	<br />
 	
 		<table>

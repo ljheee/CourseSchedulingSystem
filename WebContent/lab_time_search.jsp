@@ -135,8 +135,8 @@ var JieCi;
   
   <body>
     <header>
-    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
-		实验教学--排课管理<span>学生专业理论课-空闲时间查询</span>
+    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/pkxt/Exit.jsp'>点击退出</a></div>
+		实验教学--排课管理<span>实验室-空闲时间查询</span>
 	</header>
 	
 	<div class="nav">

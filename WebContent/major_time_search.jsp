@@ -114,6 +114,8 @@ function getTeacher(currTeacher){
 		
  	document.all.selMajor.options[document.all.selMajor.length] = new Option("selectMajor",'');
  	$("#selMajor").removeAttr("disabled");
+ 	var obj = document.getElementById("selMajor");
+ 	obj.options.add(new Option("major",999));
  
     for(var i=0; i<jsonArray.length;i++){     //循环添加多个值
        document.all.selMajor.options[i] = new Option(jsonArray[i].level+'级'+jsonArray[i].name+'#'+jsonArray[i].numStudent+'人--'+jsonArray[i].group,i);
@@ -149,7 +151,7 @@ function finishSelectBeginWeek(beginweek){
   
   <body>
     <header>
-    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/CourseSchedulingSystem/Exit.jsp'>点击退出</a></div>
+    	<div style="float:right;font-size:18px;"><a href='http://127.0.0.1:8080/pkxt/Exit.jsp'>点击退出</a></div>
 		实验教学--排课管理<span>学生专业理论课-空闲时间查询</span>
 	</header>
 	

@@ -4,14 +4,13 @@
   <welcome-file-list>
     <welcome-file>login.jsp</welcome-file>
   </welcome-file-list>
+  
   <error-page>
-    <exception-type>com.ljheee.db.UsedClassRoomException</exception-type>
-    <location>/error.jsp</location>
+    <exception-type>java.lang.NullPointerException</exception-type>
+    <location>/error.jsp</location> 
   </error-page>
-  <error-page>
-    <exception-type>java.lang.Exception</exception-type>
-    <location>/error.jsp</location>
-  </error-page>
+  
+  
   <servlet>
     <servlet-name>treat</servlet-name>
     <servlet-class>com.ljheee.web.LoginServlet</servlet-class>

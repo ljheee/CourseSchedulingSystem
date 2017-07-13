@@ -20,13 +20,14 @@ public class MatrixUtil {
 	public static  int[][] getResult(int begin, int end){
 		
 		List<WeekClass> llist = bothSpare.list;
-		int[][] result = new int[5][7];
+//		int[][] result = new int[5][7];
+		int[][] result = new int[5][5];
 		
 		for (int i = begin; i <= end; i++) {//将begin-end多张二维表叠加覆盖，结果为0的时最终可选的[实验课安排段]
 			int[][] week = llist.get(i).week;
 			
 			for (int j = 0; j < 5; j++) {
-				for (int j2 = 0; j2 < 7; j2++) {
+				for (int j2 = 0; j2 < 5; j2++) {
 					if(week[j][j2]==1){
 						result[j][j2] = 1;
 					}

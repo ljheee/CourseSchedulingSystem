@@ -70,7 +70,9 @@ public class UploadFileServlet extends HttpServlet {
 			}
 			//读取教研室计划
 			ReadXls readXls = ReadXls.getInstance();
-			readXls.setXlsFile(new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls"));
+			File f = new File(this.getServletContext().getRealPath("/")+"/xlsFiles", "2.xls");
+			readXls.setXlsFile(f);
+			System.out.println(f.getPath());
 			List<?> tList = readXls.getTeacherList();//获取教师列表List<Teacher>
 //			request.setAttribute("tList", tList);
 			request.getSession().setAttribute("tList", tList);
